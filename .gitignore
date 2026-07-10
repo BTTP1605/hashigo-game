@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.local
+
+# 有料章のシナリオ原文（平文）。公開リポジトリに含めないこと。
+# 配布には暗号化済みの public/scenario/paid.enc のみを使う。
+scenario-src/paid/

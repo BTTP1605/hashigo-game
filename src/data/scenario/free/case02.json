@@ -1,0 +1,44 @@
+{
+  "sceneId": "case02",
+  "title": "CASE 02 存在しない家族写真",
+  "nodes": [
+    { "id": "c210", "type": "chapter", "title": "CASE 02", "subtitle": "存在しない家族写真" },
+    { "id": "c215", "type": "bg", "value": "bg_street" },
+    { "id": "c220", "type": "text", "text": "ある夜、アルバイトから帰る途中。梯子は道端で、小学校低学年ほどの男の子を見つけた。時刻は夜10時を過ぎていた。" },
+    { "id": "c225", "type": "text", "speaker": "梯子", "portrait": "hashigo_normal", "text": "こんな時間にどうした？　お父さんやお母さんは？" },
+    { "id": "c230", "type": "text", "speaker": "男の子", "text": "……わからない。" },
+    { "id": "c235", "type": "choice", "prompt": "どうする？", "options": [
+      { "label": "交番へ連れていく", "goto": "c245" },
+      { "label": "一緒に親を探して歩く", "goto": "c240" }
+    ] },
+    { "id": "c240", "type": "text", "text": "しばらく一緒に歩いたが、男の子は「わからない」と繰り返すばかりだった。梯子は自分のマフラーを男の子に巻き、結局、近くの交番へ連れていった。", "next": "c250" },
+    { "id": "c245", "type": "text", "text": "梯子は自分のマフラーを男の子に巻き、近くの交番へ連れていった。" },
+    { "id": "c250", "type": "bg", "value": "bg_koban" },
+    { "id": "c255", "type": "text", "text": "翌日の昼過ぎ、警察から電話があった。保護者が見つかったこと。そして——男の子が、梯子から借りた物を返したがっているという。" },
+    { "id": "c260", "type": "text", "speaker": "警察官", "text": "こちら、お返ししますね。マフラーと……このネームホルダーです。" },
+    { "id": "c265", "type": "text", "speaker": "梯子", "portrait": "hashigo_normal", "text": "マフラーは僕のです。でも、そのホルダーは……僕の物じゃありません。" },
+    { "id": "c270", "type": "text", "speaker": "警察官", "text": "でも——ここに写っているのは、あなたですよね？" },
+    { "id": "c275", "type": "text", "text": "ホルダーの中の写真。そこには、成人した梯子と妹、そして——中学生のころに亡くなった父と母が写っていた。", "effects": { "addItems": ["item_photo"] } },
+    { "id": "c280", "type": "bg", "value": "bg_room" },
+    { "id": "c285", "type": "text", "text": "アパートに戻り、梯子は写真を何度も検分した。" },
+    { "id": "c290", "type": "choice", "prompt": "写真のどこを調べる？", "options": [
+      { "label": "父と母の顔をよく見る", "goto": "c300", "if": { "not": { "flag": "ph_parents" } } },
+      { "label": "写真の裏を確かめる", "goto": "c310", "if": { "not": { "flag": "ph_back" } } },
+      { "label": "加工の痕跡を探す", "goto": "c320", "if": { "not": { "flag": "ph_fake" } } },
+      { "label": "検分を終える", "goto": "c340", "if": { "all": [ { "flag": "ph_parents" }, { "flag": "ph_back" }, { "flag": "ph_fake" } ] } }
+    ] },
+    { "id": "c300", "type": "text", "text": "間違いなく、父と母だ。だが——二人とも、亡くなったときよりも明らかに年を取っている。死んだ人間が、写真の中で年を取っていた。", "effects": { "setFlags": { "ph_parents": true }, "addKeywords": ["kw_aged_parents"] }, "next": "c330" },
+    { "id": "c310", "type": "text", "text": "写真の裏には、手書きで「諏訪で」とあった。——梯子は諏訪へ行ったことがない。背景にも服装にも、まったく覚えがなかった。", "effects": { "setFlags": { "ph_back": true }, "addKeywords": ["kw_suwa"] }, "next": "c330" },
+    { "id": "c320", "type": "text", "text": "何度、目を凝らしても。光の当たり方、影、粒子——どこにも継ぎ目がない。合成写真には見えなかった。", "effects": { "setFlags": { "ph_fake": true }, "addKeywords": ["kw_not_composite"] }, "next": "c330" },
+    { "id": "c330", "type": "branch", "if": { "all": [ { "flag": "ph_parents" }, { "flag": "ph_back" }, { "flag": "ph_fake" } ] }, "then": "c340", "else": "c290" },
+    { "id": "c340", "type": "text", "speaker": "梯子", "portrait": "hashigo_worry", "text": "ありえないはずの家族写真……。そういえば、コンビニの店員が言っていた。あの紳士は“孫らしい男の子”を連れていたと。——あの迷子は、偶然だったのか？" },
+    { "id": "c350", "type": "choice", "prompt": "この写真を妹に見せるか？", "options": [
+      { "label": "見せない。心配をかけたくない", "goto": "c360", "effects": { "setFlags": { "showed_photo": false } } },
+      { "label": "見せて相談する", "goto": "c365", "effects": { "setFlags": { "showed_photo": true } } }
+    ] },
+    { "id": "c360", "type": "text", "text": "梯子は写真を机の奥にしまった。事故に遭ったばかりの妹へ、これ以上の心配をかけたくなかった。", "next": "c370" },
+    { "id": "c365", "type": "text", "speaker": "妹", "portrait": "sister_normal", "text": "……なにこれ。お父さんと、お母さん……？　やだ、なんで……。ねえ、これ、誰が作ったの……？" },
+    { "id": "c370", "type": "deduction", "deductionId": "d_case02" },
+    { "id": "c380", "type": "jump", "scene": "case03" }
+  ]
+}

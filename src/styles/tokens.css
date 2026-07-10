@@ -1,0 +1,20 @@
+:root {
+  --bg: #0b0e14;
+  --panel: #11151d;
+  --panel-2: #171c26;
+  --panel-3: #1e2432;
+  --text: #c9d1d9;
+  --text-strong: #e6edf3;
+  --muted: #8b949e;
+  --accent: #e8b33e;
+  --accent-dim: #9a7522;
+  --danger: #e5534b;
+  --ok: #4cc38a;
+  --border: #2a3140;
+  --bbs-bg: #e8e4d8;
+  --bbs-text: #222222;
+  --bbs-name: #227722;
+  --font-serif: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  --font-sans: "Yu Gothic UI", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
+  --font-mono: "MS Gothic", "Osaka-Mono", monospace;
+}

@@ -1,0 +1,79 @@
+{
+  "stylePrefix": "Dark-toned Japanese occult mystery adventure game illustration, early 2000s Japan atmosphere, cinematic muted color palette with deep shadows, subtle film grain, serious and melancholic mood, semi-realistic anime style, high detail",
+  "portraitSuffix": "standing three-quarter body portrait facing the viewer, arms relaxed, neutral pose, soft even studio lighting, isolated on a solid uniform pure green chroma-key background (#00FF00), no background objects, no text",
+  "backgroundSuffix": "wide establishing shot, no people, no text, atmospheric lighting, 16:9 composition",
+  "characters": [
+    {
+      "id": "hashigo",
+      "name": "梯子（主人公）",
+      "base": "A 26-year-old Japanese man with slightly unkempt medium-short black hair, tired but gentle eyes, pale complexion, slim build, wearing a dark olive-green parka over a gray hoodie and worn jeans, ordinary and approachable presence",
+      "expressions": [
+        { "file": "hashigo_normal", "desc": "calm neutral expression with a hint of melancholy" },
+        { "file": "hashigo_worry", "desc": "anxious troubled expression, furrowed brows, slightly open mouth" }
+      ]
+    },
+    {
+      "id": "sister",
+      "name": "妹（姉）",
+      "base": "A Japanese woman in her early twenties with shoulder-length dark brown hair, soft kind features, wearing a cream-colored cardigan over a simple white blouse, warm and modest presence",
+      "expressions": [
+        { "file": "sister_normal", "desc": "gentle soft smile" },
+        { "file": "sister_cry", "desc": "crying with tears, holding back emotion, trembling lips" }
+      ]
+    },
+    {
+      "id": "dotoko",
+      "name": "ドト子（ハラマオユミ）",
+      "base": "A strikingly beautiful Japanese woman in her late twenties with a sleek black bob haircut, porcelain skin, wearing an elegant thin light-gray business suit unsuited for winter, carrying a silver duralumin-like metallic case bag on her shoulder, otherworldly composed aura, slightly unnatural stillness",
+      "expressions": [
+        { "file": "dotoko_normal", "desc": "calm expressionless face with piercing intelligent eyes" },
+        { "file": "dotoko_sad", "desc": "faint sorrowful expression, downcast eyes" }
+      ]
+    },
+    {
+      "id": "okada",
+      "name": "紳士（岡田派）",
+      "base": "A distinguished Japanese gentleman in his mid-sixties with swept-back silver-gray hair, deep-set handsome features like a classic movie actor, wearing an impeccably tailored dark navy three-piece suit with a silk tie, holding an umbrella, refined and enigmatic presence",
+      "expressions": [
+        { "file": "okada_smile", "desc": "mysteriously soft and warm smile that feels both kind and unsettling" }
+      ]
+    },
+    {
+      "id": "yunyun",
+      "name": "ゆんゆん",
+      "base": "A young Japanese woman of indeterminate age with very long straight black hair, pale skin, wearing a simple dark long dress, faint knowing smirk, inhuman and uncanny composure, eyes that seem far older than her face",
+      "expressions": [
+        { "file": "yunyun_normal", "desc": "slight mocking smile with cold observing eyes" }
+      ]
+    },
+    {
+      "id": "boots",
+      "name": "ブーツの女性",
+      "base": "A Japanese woman in her mid-twenties with short brown hair, wearing a beige long winter coat with a fur-trimmed collar and reddish-brown high-heeled long boots, elegant winter New Year outfit, unaware innocent atmosphere",
+      "expressions": [
+        { "file": "boots_normal", "desc": "neutral slightly curious expression" }
+      ]
+    },
+    {
+      "id": "friend",
+      "name": "知人",
+      "base": "A Japanese man in his late twenties with short black hair, wearing a black down jacket and dark pants, ordinary appearance twisted by desperation, hollow eyes",
+      "expressions": [
+        { "file": "friend_normal", "desc": "desperate strained grin, eyes that avoid contact" }
+      ]
+    }
+  ],
+  "backgrounds": [
+    { "file": "bg_rain_conveni", "prompt": "Japanese convenience store at night in heavy rain, view from under the storefront eaves, wet asphalt reflecting fluorescent light, vending machine glow, September 2008 Tokyo suburb, typhoon approaching" },
+    { "file": "bg_room", "prompt": "Small cramp Japanese studio apartment interior at night, dim warm desk lamp, low table with a folded memo and a small jewelry case, CRT computer monitor glowing in the corner, lived-in 2008 atmosphere" },
+    { "file": "bg_bbs", "prompt": "Extreme close-up of an old CRT computer monitor in a dark room, glowing text-board forum threads on screen, green-tinted phosphor light spilling into darkness, dust particles in the light, 2000s internet nostalgia, ominous" },
+    { "file": "bg_street", "prompt": "Quiet Japanese residential street at night, lonely streetlights, utility poles and tangled wires, long shadows, cold november air, distant lit windows" },
+    { "file": "bg_koban", "prompt": "Small Japanese police box (koban) interior in daytime, plain desk and pipe chairs, notice posters on the wall, fluorescent lighting, slightly worn public atmosphere" },
+    { "file": "bg_doutor", "prompt": "Cozy Japanese coffee chain shop interior, warm brown wood tones, small tables by a window, afternoon light through glass, steam rising from coffee cups, 2008" },
+    { "file": "bg_void", "prompt": "The same coffee shop interior but completely empty of people, unnaturally still and silent like a hollow diorama model, desaturated washed-out colors, pale white even light with no shadows, uncanny emptiness" },
+    { "file": "bg_station", "prompt": "Japanese train station concourse in the evening, ticket gates, departure board glow, polished floor reflections, but eerily few people, cold fluorescent light" },
+    { "file": "bg_shrine", "prompt": "Japanese shrine grounds on a clear winter afternoon of New Year, stone steps and torii gate, leafless trees, pale golden low winter sunlight, quiet tension in the air, January 2nd" },
+    { "file": "bg_home2028", "prompt": "Bright warm Japanese family living room in summer 2028, sofa with a napping cushion, watermelon on the table, sunlight through lace curtains, subtle near-future home appliances, nostalgic happy atmosphere with a faint uncanny stillness" },
+    { "file": "bg_car", "prompt": "Interior of a family car parked near a school in the afternoon, view across the front seats, empty passenger seat, light through the windshield, unsettling quiet" }
+  ]
+}
