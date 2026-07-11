@@ -136,3 +136,8 @@ class AudioManager {
 }
 
 export const audio = new AudioManager();
+
+// 開発時のみ: 再生状態を検査できるように公開
+if (import.meta.env.DEV) {
+  (window as unknown as { __audio: AudioManager }).__audio = audio;
+}
