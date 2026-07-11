@@ -50,6 +50,8 @@ interface GameStore {
   pendingScene: string | null;
   pendingSave: SaveData | null;
   toasts: { id: number; text: string }[];
+  autoMode: boolean;
+  skipMode: boolean;
 
   init: () => void;
   startNew: () => void;
@@ -63,6 +65,9 @@ interface GameStore {
   finishEnding: () => void;
   unlock: (passphrase: string) => Promise<boolean>;
   dismissToast: (id: number) => void;
+  toggleAuto: () => void;
+  toggleSkip: () => void;
+  cancelModes: () => void;
 }
 
 let toastSeq = 1;
@@ -204,6 +209,8 @@ export const useGameStore = create<GameStore>((set, get) => {
     pendingScene: null,
     pendingSave: null,
     toasts: [],
+    autoMode: false,
+    skipMode: false,
 
     init: () => {
       set({ endingsSeen: getSeenEndings() });
@@ -346,6 +353,10 @@ export const useGameStore = create<GameStore>((set, get) => {
     dismissToast: (id) => {
       set({ toasts: get().toasts.filter((t) => t.id !== id) });
     },
+
+    toggleAuto: () => set({ autoMode: !get().autoMode, skipMode: false }),
+    toggleSkip: () => set({ skipMode: !get().skipMode, autoMode: false }),
+    cancelModes: () => set({ autoMode: false, skipMode: false }),
   };
 });
 

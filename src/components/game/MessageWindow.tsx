@@ -6,10 +6,13 @@ type TextNode = Extract<ScenarioNode, { type: "text" }>;
 
 export default function MessageWindow({ node }: { node: TextNode }) {
   const advance = useGameStore((s) => s.advance);
+  const autoMode = useGameStore((s) => s.autoMode);
+  const skipMode = useGameStore((s) => s.skipMode);
+  const cancelModes = useGameStore((s) => s.cancelModes);
   const [count, setCount] = useState(0);
   const full = node.text;
   const isBbs = !!node.bbs;
-  const speed = isBbs ? 8 : 26;
+  const speed = skipMode ? 3 : isBbs ? 8 : 26;
 
   useEffect(() => {
     setCount(0);
@@ -28,7 +31,24 @@ export default function MessageWindow({ node }: { node: TextNode }) {
   const done = count >= full.length;
   const shown = done ? full : full.slice(0, count);
 
+  // オート/スキップ時は表示完了後に自動送り
+  useEffect(() => {
+    if (!done) return;
+    if (skipMode) {
+      const t = setTimeout(advance, 160);
+      return () => clearTimeout(t);
+    }
+    if (autoMode) {
+      const t = setTimeout(advance, 1800);
+      return () => clearTimeout(t);
+    }
+  }, [done, autoMode, skipMode, advance, node.id]);
+
   function handleClick() {
+    if (autoMode || skipMode) {
+      cancelModes();
+      return;
+    }
     if (!done) {
       setCount(full.length);
     } else {

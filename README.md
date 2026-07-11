@@ -18,23 +18,26 @@ npm run build    # 型チェック + 本番ビルド（dist/）
 npm run deploy   # GitHub Pages へデプロイ（gh-pages ブランチ）
 ```
 
-開発用の解錠コード（デフォルト）: `HONRYU-2028`
+ローカル開発時の解錠コード（デフォルト）: `HONRYU-2028`
+（このコードはローカル開発専用。公開デプロイには使わないこと）
 
 ## 販売運用（note連携）
 
-1. 販売用のパスフレーズを決めて再ビルドする
-   ```bash
-   # PowerShell
-   $env:HASHIGO_PASSPHRASE = "新しいコード"; npm run build
+1. [src/components/screens/UnlockScreen.tsx](src/components/screens/UnlockScreen.tsx) の `NOTE_URL` を実際の有料記事URLに差し替える
+2. **本番用パスフレーズを環境変数で指定して**デプロイする
+   ```powershell
+   $env:HASHIGO_PASSPHRASE = "本番用コード"; npm run deploy
    ```
-2. [src/components/screens/UnlockScreen.tsx](src/components/screens/UnlockScreen.tsx) の `NOTE_URL` を実際の有料記事URLに差し替える
-3. note の有料記事本文に解錠コードを記載して販売する
+3. note の有料記事本文に本番用コードを記載して販売する
 
-### セキュリティ上の注意
+本番用コードのメモは `passphrase.local`（gitignore済み）に置く。note記事の下書きは [docs/note-article-draft.md](docs/note-article-draft.md)。
 
-- `scenario-src/paid/`（有料章の平文）は `.gitignore` 済み。**公開リポジトリにコミットしないこと**
-- 配布されるのは暗号化済みの `public/scenario/paid.enc` のみ（AES-GCM + PBKDF2）。コードはソースに埋め込まれていないため、ソースを読んでも突破できない
-- コードの又貸しはサーバーレスでは防げない。必要になったら販売期ごとにコードを変えて再ビルドする
+### セキュリティ設計
+
+- `scenario-src/paid/`（有料章の平文）と `public/scenario/paid.enc`（暗号化バンドル）は**どちらもリポジトリに含めない**。encはビルド時にその都度生成され、デプロイ成果物にのみ同梱される
+- 暗号はAES-GCM + PBKDF2。解錠コードはソースに一切埋め込まれないため、公開リポジトリを読んでも突破できない
+- このリポジトリをクローンした第三者は体験版（無料章）のみビルド・プレイ可能
+- コードの又貸しはサーバーレスでは防げない。必要になったら販売期ごとにコードを変えて再デプロイする
 
 ## 画像アセット
 

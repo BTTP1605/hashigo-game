@@ -19,6 +19,10 @@ export default function GameScreen() {
   const advance = useGameStore((s) => s.advance);
   const setOverlay = useGameStore((s) => s.setOverlay);
   const backToTitle = useGameStore((s) => s.backToTitle);
+  const autoMode = useGameStore((s) => s.autoMode);
+  const skipMode = useGameStore((s) => s.skipMode);
+  const toggleAuto = useGameStore((s) => s.toggleAuto);
+  const toggleSkip = useGameStore((s) => s.toggleSkip);
 
   const scene = getScene(sceneId);
   const node = scene?.nodes[nodeIndex] ?? null;
@@ -50,6 +54,8 @@ export default function GameScreen() {
       {node.type === "text" && node.portrait && <PortraitView portrait={node.portrait} />}
 
       <div className="game-menu">
+        <button className={autoMode ? "mode-on" : ""} onClick={toggleAuto}>AUTO</button>
+        <button className={skipMode ? "mode-on" : ""} onClick={toggleSkip}>SKIP</button>
         <button onClick={() => setOverlay("backlog")}>LOG</button>
         <button onClick={() => setOverlay("file")}>FILE</button>
         <button onClick={() => setOverlay("save")}>SAVE</button>

@@ -31,8 +31,28 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  position: relative;
   background:
     radial-gradient(ellipse at 50% 20%, #16202e 0%, var(--bg) 65%);
+}
+.title-screen > * { position: relative; z-index: 1; }
+.title-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0 !important;
+}
+.title-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  animation: bgfade 1.4s ease-out;
+}
+.title-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11,14,20,0.25) 0%, rgba(11,14,20,0.55) 55%, rgba(11,14,20,0.9) 100%);
 }
 .title-screen .title-sub {
   color: var(--muted);
@@ -104,7 +124,9 @@ button {
 }
 .bg-layer img {
   width: 100%; height: 100%; object-fit: cover; display: block;
+  animation: bgfade 0.9s ease-out;
 }
+@keyframes bgfade { from { opacity: 0; } to { opacity: 1; } }
 .bg-label {
   position: absolute;
   top: 12px;
@@ -137,7 +159,11 @@ button {
   justify-content: center;
   pointer-events: none;
 }
-.portrait-layer img { max-height: 46dvh; }
+.portrait-layer img {
+  max-height: 46dvh;
+  animation: portraitfade 0.35s ease-out;
+}
+@keyframes portraitfade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .portrait-fallback {
   width: 150px;
   height: 190px;
@@ -170,6 +196,11 @@ button {
   padding: 5px 10px;
 }
 .game-menu button:hover { color: var(--accent); border-color: var(--accent-dim); }
+.game-menu button.mode-on {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
 
 /* メッセージウィンドウ */
 .message-window {
@@ -252,6 +283,10 @@ button {
   cursor: pointer;
   z-index: 40;
 }
+.chapter-card .ch-title, .chapter-card .ch-sub, .chapter-card .ch-hint {
+  animation: chfade 1.6s ease-out;
+}
+@keyframes chfade { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; } }
 .chapter-card .ch-title {
   font-family: var(--font-serif);
   font-size: 40px;

@@ -3,5 +3,11 @@ dist/
 *.local
 
 # 有料章のシナリオ原文（平文）。公開リポジトリに含めないこと。
-# 配布には暗号化済みの public/scenario/paid.enc のみを使う。
 scenario-src/paid/
+
+# 暗号化済み有料章バンドル。ローカルでは開発用コード、デプロイ時は本番コードで
+# その都度生成されるため、リポジトリには含めない（デプロイ物にのみ同梱される）。
+public/scenario/paid.enc
+
+# 本番用パスフレーズのメモ（ローカル専用）
+passphrase.local

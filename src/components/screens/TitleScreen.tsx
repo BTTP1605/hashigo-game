@@ -8,10 +8,20 @@ export default function TitleScreen() {
   const startNew = useGameStore((s) => s.startNew);
   const endingsSeen = useGameStore((s) => s.endingsSeen);
   const [showLoad, setShowLoad] = useState(false);
+  const [keyVisualOk, setKeyVisualOk] = useState(true);
   const hasSave = listSaves().some((s) => s.data !== null);
 
   return (
     <div className="title-screen">
+      {keyVisualOk && (
+        <div className="title-bg">
+          <img
+            src={`${import.meta.env.BASE_URL}assets/bg/title_key.png`}
+            onError={() => setKeyVisualOk(false)}
+            alt=""
+          />
+        </div>
+      )}
       <div className="title-sub">―停点調査記録―</div>
       <h1>ヤコブの梯子</h1>
       <div className="title-tag">JACOB'S LADDER : RECORDS OF STILL POINTS</div>

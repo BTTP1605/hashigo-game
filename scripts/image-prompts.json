@@ -64,6 +64,7 @@
     }
   ],
   "backgrounds": [
+    { "file": "title_key", "prompt": "Surreal key visual: a faint translucent ladder made of pale golden light rising from a rain-soaked 2008 Tokyo street at night into a vast dark sky filled with floating torn book pages, a small silhouette of a young man looking up at the ladder, wet asphalt reflections, quiet awe and melancholy" },
     { "file": "bg_rain_conveni", "prompt": "Japanese convenience store at night in heavy rain, view from under the storefront eaves, wet asphalt reflecting fluorescent light, vending machine glow, September 2008 Tokyo suburb, typhoon approaching" },
     { "file": "bg_room", "prompt": "Small cramp Japanese studio apartment interior at night, dim warm desk lamp, low table with a folded memo and a small jewelry case, CRT computer monitor glowing in the corner, lived-in 2008 atmosphere" },
     { "file": "bg_bbs", "prompt": "Extreme close-up of an old CRT computer monitor in a dark room, glowing text-board forum threads on screen, green-tinted phosphor light spilling into darkness, dust particles in the light, 2000s internet nostalgia, ominous" },
