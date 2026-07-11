@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useGameStore } from "../../store/gameStore";
 
-// 販売開始時に、note の有料記事URLへ差し替えてください。
-const NOTE_URL = "https://note.com/your_account/n/xxxxxxxxxxxx";
+const NOTE_URL = "https://note.com/bttp";
 
 export default function UnlockScreen() {
   const unlock = useGameStore((s) => s.unlock);
@@ -33,7 +32,9 @@ export default function UnlockScreen() {
         最終章まで続きをプレイできます。
       </p>
       <p className="unlock-note">
-        解錠コードは note の有料記事に記載されています：
+        解錠コードは note の有料記事に記載されています。
+        <br />
+        BTTPのnoteページ：
         <br />
         <a href={NOTE_URL} target="_blank" rel="noreferrer">
           {NOTE_URL}
