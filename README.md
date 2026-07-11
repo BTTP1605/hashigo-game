@@ -39,11 +39,16 @@ npm run deploy   # GitHub Pages へデプロイ（gh-pages ブランチ）
 - このリポジトリをクローンした第三者は体験版（無料章）のみビルド・プレイ可能
 - コードの又貸しはサーバーレスでは防げない。必要になったら販売期ごとにコードを変えて再デプロイする
 
+## 音声アセット
+
+- 効果音: `npm run gense` でプログラム合成（`public/assets/audio/se/`、外部素材不使用）
+- BGM: `public/assets/audio/bgm/*.mp3` に置くと場面連動で自動再生。無いトラックは無音。生成プロンプトは [docs/bgm-prompts.md](docs/bgm-prompts.md)
+
 ## 画像アセット
 
 画像が無くてもプレースホルダで動作する。生成方法は [docs/image-prompts.md](docs/image-prompts.md) を参照。
 
-- 背景: `public/assets/bg/{bg_id}.jpg`（例: `bg_shrine.jpg`）
+- 背景: `public/assets/bg/{bg_id}.png`（例: `bg_shrine.png`）
 - 立ち絵: `public/assets/char/{char}_{expression}.png`（例: `hashigo_normal.png`、透過PNG推奨）
 - Codex CLI（ChatGPT Plus）での一括生成: `npm run genimg -- --list` で対象確認
 

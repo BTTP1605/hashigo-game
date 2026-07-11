@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGameStore } from "../../store/gameStore";
 import { listSaves } from "../../engine/saveSystem";
 import { ENDINGS } from "../../data/endings";
+import { audio } from "../../engine/audio";
 import SaveLoadPanel from "../game/SaveLoadPanel";
 
 export default function TitleScreen() {
+  useEffect(() => {
+    audio.playBgm("bgm_title");
+  }, []);
   const startNew = useGameStore((s) => s.startNew);
   const endingsSeen = useGameStore((s) => s.endingsSeen);
   const [showLoad, setShowLoad] = useState(false);

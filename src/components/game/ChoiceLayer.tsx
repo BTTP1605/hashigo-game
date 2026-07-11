@@ -1,5 +1,6 @@
 import type { ScenarioNode } from "../../engine/types";
 import { evalCond } from "../../engine/conditions";
+import { audio } from "../../engine/audio";
 import { useGameStore } from "../../store/gameStore";
 
 type ChoiceNode = Extract<ScenarioNode, { type: "choice" }>;
@@ -18,7 +19,7 @@ export default function ChoiceLayer({ node }: { node: ChoiceNode }) {
     <div className="choice-layer">
       {node.prompt && <div className="choice-prompt">{node.prompt}</div>}
       {visible.map((o, i) => (
-        <button key={i} onClick={() => choose(o)}>
+        <button key={i} onClick={() => { audio.playSe("se_choice"); choose(o); }}>
           {o.label}
         </button>
       ))}

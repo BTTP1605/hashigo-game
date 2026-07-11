@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import deductions from "../../data/deductions.json";
 import keywordDefs from "../../data/keywords.json";
 import type { Deduction } from "../../engine/types";
+import { audio } from "../../engine/audio";
 import { useGameStore } from "../../store/gameStore";
 
 export default function DeductionView({ deductionId }: { deductionId: string }) {
@@ -33,11 +34,13 @@ export default function DeductionView({ deductionId }: { deductionId: string }) 
     const blanks = ded!.parts.filter((p) => p.t === "blank") as { t: "blank"; answer: string }[];
     const wrongNow = blanks.map((b, i) => answers[i] !== b.answer);
     if (wrongNow.some(Boolean)) {
+      audio.playSe("se_wrong");
       setEverWrong(true);
       setShowHint(true);
       setWrong(wrongNow);
       setAnswers(answers.map((a, i) => (wrongNow[i] ? null : a)));
     } else {
+      audio.playSe("se_correct");
       setPhase("success");
     }
   }

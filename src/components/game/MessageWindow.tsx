@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ScenarioNode } from "../../engine/types";
+import { audio } from "../../engine/audio";
 import { useGameStore } from "../../store/gameStore";
 
 type TextNode = Extract<ScenarioNode, { type: "text" }>;
@@ -52,6 +53,7 @@ export default function MessageWindow({ node }: { node: TextNode }) {
     if (!done) {
       setCount(full.length);
     } else {
+      audio.playSe("se_click");
       advance();
     }
   }

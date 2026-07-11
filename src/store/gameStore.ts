@@ -24,6 +24,7 @@ import {
 } from "../engine/saveSystem";
 import keywordDefs from "../data/keywords.json";
 import itemDefs from "../data/items.json";
+import { audio, BGM_BY_BG } from "../engine/audio";
 
 export type Screen = "title" | "game" | "unlock" | "ending";
 export type Overlay = null | "backlog" | "file" | "save" | "load";
@@ -52,6 +53,7 @@ interface GameStore {
   toasts: { id: number; text: string }[];
   autoMode: boolean;
   skipMode: boolean;
+  soundOn: boolean;
 
   init: () => void;
   startNew: () => void;
@@ -68,6 +70,7 @@ interface GameStore {
   toggleAuto: () => void;
   toggleSkip: () => void;
   cancelModes: () => void;
+  toggleSound: () => void;
 }
 
 let toastSeq = 1;
@@ -95,6 +98,9 @@ export const useGameStore = create<GameStore>((set, get) => {
     }
     for (const it of r.gainedItems) {
       toasts.push({ id: toastSeq++, text: `証拠品：${labelOfItem(it)}` });
+    }
+    if (r.gainedKeywords.length > 0 || r.gainedItems.length > 0) {
+      audio.playSe("se_get");
     }
     set({ flags: r.flags, items: r.items, keywords: r.keywords, toasts });
   }
@@ -154,6 +160,7 @@ export const useGameStore = create<GameStore>((set, get) => {
       switch (node.type) {
         case "bg":
           set({ bg: node.value });
+          audio.playBgm(BGM_BY_BG[node.value] ?? null);
           idx++;
           continue;
         case "branch": {
@@ -168,6 +175,7 @@ export const useGameStore = create<GameStore>((set, get) => {
           return;
         case "chapter":
           set({ nodeIndex: idx, chapterTitle: `${node.title} ${node.subtitle ?? ""}`.trim() });
+          audio.playSe("se_chapter");
           saveGame("auto", makeSaveData());
           return;
         case "text": {
@@ -184,6 +192,7 @@ export const useGameStore = create<GameStore>((set, get) => {
           return;
         case "ending": {
           const seen = addSeenEnding(node.endingId);
+          audio.playBgm("bgm_ending");
           set({ endingId: node.endingId, endingsSeen: seen, screen: "ending" });
           return;
         }
@@ -211,6 +220,7 @@ export const useGameStore = create<GameStore>((set, get) => {
     toasts: [],
     autoMode: false,
     skipMode: false,
+    soundOn: audio.enabled,
 
     init: () => {
       set({ endingsSeen: getSeenEndings() });
@@ -273,7 +283,10 @@ export const useGameStore = create<GameStore>((set, get) => {
       processFrom(get().nodeIndex + 1);
     },
 
-    setOverlay: (o) => set({ overlay: o }),
+    setOverlay: (o) => {
+      if (o !== null) audio.playSe("se_page");
+      set({ overlay: o });
+    },
 
     saveSlot: (slot) => {
       saveGame(slot, makeSaveData());
@@ -303,6 +316,7 @@ export const useGameStore = create<GameStore>((set, get) => {
         endingId: null,
         screen: "game",
       });
+      audio.playBgm(BGM_BY_BG[data.bg] ?? null);
     },
 
     backToTitle: () => {
@@ -357,6 +371,11 @@ export const useGameStore = create<GameStore>((set, get) => {
     toggleAuto: () => set({ autoMode: !get().autoMode, skipMode: false }),
     toggleSkip: () => set({ skipMode: !get().skipMode, autoMode: false }),
     cancelModes: () => set({ autoMode: false, skipMode: false }),
+    toggleSound: () => {
+      const on = !get().soundOn;
+      audio.setEnabled(on);
+      set({ soundOn: on });
+    },
   };
 });
 

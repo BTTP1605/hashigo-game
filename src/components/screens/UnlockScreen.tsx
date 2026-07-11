@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { audio } from "../../engine/audio";
 import { useGameStore } from "../../store/gameStore";
 
 const NOTE_URL = "https://note.com/bttp";
@@ -15,6 +16,7 @@ export default function UnlockScreen() {
     setBusy(true);
     setError("");
     const ok = await unlock(code);
+    if (ok) audio.playSe("se_unlock");
     if (!ok) {
       setError("解錠できませんでした。コードを確認してください。");
       setBusy(false);

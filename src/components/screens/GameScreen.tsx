@@ -23,6 +23,8 @@ export default function GameScreen() {
   const skipMode = useGameStore((s) => s.skipMode);
   const toggleAuto = useGameStore((s) => s.toggleAuto);
   const toggleSkip = useGameStore((s) => s.toggleSkip);
+  const soundOn = useGameStore((s) => s.soundOn);
+  const toggleSound = useGameStore((s) => s.toggleSound);
 
   const scene = getScene(sceneId);
   const node = scene?.nodes[nodeIndex] ?? null;
@@ -60,6 +62,7 @@ export default function GameScreen() {
         <button onClick={() => setOverlay("file")}>FILE</button>
         <button onClick={() => setOverlay("save")}>SAVE</button>
         <button onClick={() => setOverlay("load")}>LOAD</button>
+        <button className={soundOn ? "mode-on" : ""} onClick={toggleSound}>♪</button>
         <button onClick={backToTitle}>TITLE</button>
       </div>
 
