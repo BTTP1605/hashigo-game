@@ -18,6 +18,7 @@ export const BGM_BY_BG: Record<string, string | null> = {
   bg_black: null,
   bg_rain_conveni: "bgm_rain",
   bg_street: "bgm_rain",
+  bg_street_day: "bgm_daily",
   bg_room: "bgm_daily",
   bg_koban: "bgm_daily",
   bg_doutor: "bgm_daily",

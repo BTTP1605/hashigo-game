@@ -142,6 +142,7 @@ button {
 .bg_room { background: linear-gradient(180deg, #14110d 0%, #1e1913 60%, #2a2118 100%); }
 .bg_bbs { background: linear-gradient(180deg, #06090d 0%, #0a1410 100%); }
 .bg_street { background: linear-gradient(180deg, #0b0e18 0%, #171b2b 60%, #232741 100%); }
+.bg_street_day { background: linear-gradient(180deg, #b7c3d0 0%, #c8cfd2 55%, #cfcabc 100%); }
 .bg_koban { background: linear-gradient(180deg, #0d1218 0%, #1a2530 100%); }
 .bg_doutor { background: linear-gradient(180deg, #191008 0%, #2b1d10 60%, #3a2a17 100%); }
 .bg_void { background: linear-gradient(180deg, #d8d8d4 0%, #b8bab8 100%); }

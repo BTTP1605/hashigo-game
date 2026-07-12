@@ -3,7 +3,7 @@
   "title": "CASE 03 ドトールの女",
   "nodes": [
     { "id": "c310", "type": "chapter", "title": "CASE 03", "subtitle": "ドトールの女" },
-    { "id": "c315", "type": "bg", "value": "bg_street" },
+    { "id": "c315", "type": "bg", "value": "bg_street_day" },
     { "id": "c320", "type": "text", "text": "それから数日後。道を歩いていると、背後から名前を呼ばれた。振り返ると——美しいスーツ姿の女性が立っていた。肩には、銀色のジュラルミンケースのようなバッグ。" },
     { "id": "c325", "type": "text", "speaker": "梯子", "portrait": "hashigo_worry", "text": "どうして僕の名前を知っているんですか？" },
     { "id": "c330", "type": "text", "speaker": "ドト子", "portrait": "dotoko_normal", "text": "あなたは私に会うのは初めてです。でも、私はあなたのことをよく知っています。" },

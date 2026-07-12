@@ -6,6 +6,7 @@ const BG_LABELS: Record<string, string> = {
   bg_room: "アパート",
   bg_bbs: "掲示板 ～enigma～",
   bg_street: "夜の路上",
+  bg_street_day: "昼の路上",
   bg_koban: "交番",
   bg_doutor: "ドトールコーヒー",
   bg_void: "誰もいない空間",
