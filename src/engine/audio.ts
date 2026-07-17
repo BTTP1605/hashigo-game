@@ -44,12 +44,27 @@ class AudioManager {
   private currentBgm: string | null = null;
   private wantedBgm: string | null = null;
   private retryArmed = false;
+  private retryHandler: (() => void) | null = null;
   private fadeTimer: ReturnType<typeof setInterval> | null = null;
   private seCache = new Map<string, HTMLAudioElement>();
   enabled: boolean;
 
   constructor() {
     this.enabled = localStorage.getItem(`${GAME_KEY}_sound`) !== "off";
+    // タブが非表示になったら必ずBGMを止める（別タブ・閉じ忘れタブで鳴り続けるのを防ぐ）。
+    // 再表示時は、音がONで再生中だったトラックがあれば再開する。
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        this.clearFade();
+        this.bgmEl?.pause();
+      } else if (this.enabled && this.wantedBgm && this.currentBgm && this.bgmEl) {
+        void this.bgmEl.play().catch(() => {});
+      }
+    });
+    // ページ離脱・破棄時にも確実に止める。
+    const stop = () => this.bgmEl?.pause();
+    window.addEventListener("pagehide", stop);
+    window.addEventListener("beforeunload", stop);
   }
 
   private clearFade(): void {
@@ -57,6 +72,15 @@ class AudioManager {
       clearInterval(this.fadeTimer);
       this.fadeTimer = null;
     }
+  }
+
+  // 自動再生リトライ用のpointerdownリスナーを解除する（音OFF時などに呼ぶ）。
+  private cancelRetry(): void {
+    if (this.retryHandler) {
+      document.removeEventListener("pointerdown", this.retryHandler);
+      this.retryHandler = null;
+    }
+    this.retryArmed = false;
   }
 
   private ensureEl(): HTMLAudioElement {
@@ -74,6 +98,7 @@ class AudioManager {
     localStorage.setItem(`${GAME_KEY}_sound`, on ? "on" : "off");
     if (!on) {
       this.clearFade();
+      this.cancelRetry();
       this.bgmEl?.pause();
       return;
     }
@@ -141,13 +166,16 @@ class AudioManager {
     if (this.retryArmed) return;
     this.retryArmed = true;
     const retry = () => {
+      this.retryHandler = null;
       this.retryArmed = false;
       const track = this.wantedBgm;
-      if (this.enabled && track) {
+      // タブが非表示なら再開しない。音がONのときだけ鳴らし直す。
+      if (this.enabled && track && !document.hidden) {
         this.currentBgm = null; // 強制的に鳴らし直す
         this.playBgm(track);
       }
     };
+    this.retryHandler = retry;
     document.addEventListener("pointerdown", retry, { once: true });
   }
 }

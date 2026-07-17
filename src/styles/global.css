@@ -36,6 +36,20 @@ button {
     radial-gradient(ellipse at 50% 20%, #16202e 0%, var(--bg) 65%);
 }
 .title-screen > * { position: relative; z-index: 1; }
+.title-sound {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  background: rgba(11, 14, 20, 0.7);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  padding: 6px 12px;
+}
+.title-sound:hover { color: var(--accent); border-color: var(--accent-dim); }
+.title-sound.mode-on { color: var(--bg); background: var(--accent); border-color: var(--accent); }
 .title-bg {
   position: absolute;
   inset: 0;

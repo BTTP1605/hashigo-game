@@ -11,6 +11,8 @@ export default function TitleScreen() {
   }, []);
   const startNew = useGameStore((s) => s.startNew);
   const endingsSeen = useGameStore((s) => s.endingsSeen);
+  const soundOn = useGameStore((s) => s.soundOn);
+  const toggleSound = useGameStore((s) => s.toggleSound);
   const [showLoad, setShowLoad] = useState(false);
   const [keyVisualOk, setKeyVisualOk] = useState(true);
   const hasSave = listSaves().some((s) => s.data !== null);
@@ -26,6 +28,13 @@ export default function TitleScreen() {
           />
         </div>
       )}
+      <button
+        className={`title-sound ${soundOn ? "mode-on" : ""}`}
+        onClick={toggleSound}
+        aria-label="BGMのオン・オフ"
+      >
+        {soundOn ? "♪ ON" : "♪ OFF"}
+      </button>
       <div className="title-sub">―停点調査記録―</div>
       <h1>ヤコブの梯子</h1>
       <div className="title-tag">JACOB'S LADDER : RECORDS OF STILL POINTS</div>
