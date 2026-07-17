@@ -10,7 +10,7 @@
     "encrypt": "node scripts/encrypt-scenario.mjs",
     "genimg": "node scripts/generate-images.mjs",
     "gense": "node scripts/generate-se.mjs",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "node scripts/require-passphrase.mjs && npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "react": "^18.3.1",

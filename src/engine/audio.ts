@@ -4,6 +4,8 @@
 // BGMは「単一の永続Audio要素」を使い回す設計。トラック切替は同じ要素の src を
 // 差し替えるだけなので、前のトラックは必ず停止し、鳴りっぱなしの孤児要素が生まれない。
 
+import { GAME_KEY } from "./saveSystem";
+
 const BASE = import.meta.env.BASE_URL;
 
 export type SeName =
@@ -47,7 +49,7 @@ class AudioManager {
   enabled: boolean;
 
   constructor() {
-    this.enabled = localStorage.getItem("hashigo_sound") !== "off";
+    this.enabled = localStorage.getItem(`${GAME_KEY}_sound`) !== "off";
   }
 
   private clearFade(): void {
@@ -69,7 +71,7 @@ class AudioManager {
 
   setEnabled(on: boolean): void {
     this.enabled = on;
-    localStorage.setItem("hashigo_sound", on ? "on" : "off");
+    localStorage.setItem(`${GAME_KEY}_sound`, on ? "on" : "off");
     if (!on) {
       this.clearFade();
       this.bgmEl?.pause();

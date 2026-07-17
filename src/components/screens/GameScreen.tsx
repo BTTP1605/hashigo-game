@@ -35,7 +35,8 @@ export default function GameScreen() {
         const st = useGameStore.getState();
         if (st.overlay) return;
         const n = getScene(st.sceneId)?.nodes[st.nodeIndex];
-        if (n && (n.type === "text" || n.type === "chapter")) {
+        // textノードのEnter/SpaceはMessageWindow側が処理する（文字送り完了を考慮するため）
+        if (n && n.type === "chapter") {
           e.preventDefault();
           st.advance();
         }
@@ -76,7 +77,10 @@ export default function GameScreen() {
 
       {node.type === "text" && <MessageWindow node={node} />}
       {node.type === "choice" && <ChoiceLayer node={node} />}
-      {node.type === "deduction" && <DeductionView deductionId={node.deductionId} />}
+      {node.type === "deduction" && (
+        // key指定で推理が変わるたびに再マウントし、回答・ミス履歴を確実に初期化する
+        <DeductionView key={node.deductionId} deductionId={node.deductionId} />
+      )}
 
       <ToastArea />
 

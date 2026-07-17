@@ -1,5 +1,10 @@
 import type { GameFlags } from "./types";
 
+// LocalStorageキーの作品別プレフィックス。同一オリジン（GitHub Pagesの同一ユーザー）で
+// 複数作品を公開してもセーブ・エンディング・解錠状態が衝突しないよう、作品ごとに一意にする。
+// ※hashigoは既公開プレイヤーのセーブを維持するため従来キーのまま。
+export const GAME_KEY = "hashigo";
+
 export interface SaveData {
   version: 1;
   timestamp: number;
@@ -14,7 +19,7 @@ export interface SaveData {
 
 export type SlotId = 0 | 1 | 2 | "auto";
 
-const keyOf = (slot: SlotId) => `hashigo_save_${slot}`;
+const keyOf = (slot: SlotId) => `${GAME_KEY}_save_${slot}`;
 
 export function saveGame(slot: SlotId, data: SaveData): void {
   try {
@@ -49,7 +54,7 @@ export function listSaves(): { slot: SlotId; data: SaveData | null }[] {
 
 export function getSeenEndings(): string[] {
   try {
-    return JSON.parse(localStorage.getItem("hashigo_endings") ?? "[]");
+    return JSON.parse(localStorage.getItem(`${GAME_KEY}_endings`) ?? "[]");
   } catch {
     return [];
   }
@@ -58,14 +63,14 @@ export function getSeenEndings(): string[] {
 export function addSeenEnding(id: string): string[] {
   const seen = getSeenEndings();
   if (!seen.includes(id)) seen.push(id);
-  localStorage.setItem("hashigo_endings", JSON.stringify(seen));
+  localStorage.setItem(`${GAME_KEY}_endings`, JSON.stringify(seen));
   return seen;
 }
 
 export function getStoredPassphrase(): string | null {
-  return localStorage.getItem("hashigo_unlock");
+  return localStorage.getItem(`${GAME_KEY}_unlock`);
 }
 
 export function storePassphrase(pass: string): void {
-  localStorage.setItem("hashigo_unlock", pass);
+  localStorage.setItem(`${GAME_KEY}_unlock`, pass);
 }

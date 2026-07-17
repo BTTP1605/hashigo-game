@@ -58,6 +58,19 @@ export default function MessageWindow({ node }: { node: TextNode }) {
     }
   }
 
+  // Enter/Space はクリックと同じ動作にする（表示途中なら全文表示で止まる）。
+  // 文字送りの完了状態はこのコンポーネントしか知らないため、ここで処理する。
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      if (useGameStore.getState().overlay) return;
+      e.preventDefault();
+      handleClick();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
   if (isBbs) {
     return (
       <div className="message-window bbs-mode" onClick={handleClick}>
