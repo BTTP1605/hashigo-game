@@ -67,10 +67,3 @@ export function addSeenEnding(id: string): string[] {
   return seen;
 }
 
-export function getStoredPassphrase(): string | null {
-  return localStorage.getItem(`${GAME_KEY}_unlock`);
-}
-
-export function storePassphrase(pass: string): void {
-  localStorage.setItem(`${GAME_KEY}_unlock`, pass);
-}

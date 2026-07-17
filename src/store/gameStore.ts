@@ -15,10 +15,8 @@ import {
 import {
   addSeenEnding,
   getSeenEndings,
-  getStoredPassphrase,
   loadGame,
   saveGame,
-  storePassphrase,
   type SaveData,
   type SlotId,
 } from "../engine/saveSystem";
@@ -65,7 +63,7 @@ interface GameStore {
   loadSlot: (slot: SlotId) => void;
   backToTitle: () => void;
   finishEnding: () => void;
-  unlock: (passphrase: string) => Promise<boolean>;
+  recheckUnlock: () => Promise<boolean>;
   dismissToast: (id: number) => void;
   toggleAuto: () => void;
   toggleSkip: () => void;
@@ -224,12 +222,35 @@ export const useGameStore = create<GameStore>((set, get) => {
 
     init: () => {
       set({ endingsSeen: getSeenEndings() });
-      const pass = getStoredPassphrase();
-      if (pass) {
-        loadPaidScenes(pass).then((ok) => {
-          if (ok) set({ paidReady: true });
-        });
-      }
+      // 解錠Cookieを持つ端末なら有料章を先読みしておく（購入者はシームレスに続きへ）。
+      loadPaidScenes().then((ok) => {
+        if (!ok) return;
+        set({ paidReady: true });
+        // note解錠リンクから戻ってきた直後（?unlocked=1）は、壁で保存したセーブから再開する。
+        const justUnlocked = new URLSearchParams(location.search).has("unlocked");
+        if (justUnlocked) {
+          const data = loadGame("auto");
+          if (data && isPaidScene(data.sceneId)) {
+            const scene = getScene(data.sceneId);
+            const idx = scene ? scene.nodes.findIndex((n) => n.id === data.nodeId) : -1;
+            set({
+              sceneId: data.sceneId,
+              nodeIndex: idx >= 0 ? idx : 0,
+              flags: data.flags,
+              items: data.items,
+              keywords: data.keywords,
+              bg: data.bg,
+              chapterTitle: data.chapterTitle,
+              backlog: [],
+              overlay: null,
+              endingId: null,
+              screen: "game",
+            });
+            audio.playBgm(BGM_BY_BG[data.bg] ?? null);
+          }
+          history.replaceState(null, "", location.pathname);
+        }
+      });
     },
 
     startNew: () => {
@@ -328,10 +349,9 @@ export const useGameStore = create<GameStore>((set, get) => {
       set({ screen: "title", endingId: null });
     },
 
-    unlock: async (passphrase) => {
-      const ok = await loadPaidScenes(passphrase);
+    recheckUnlock: async () => {
+      const ok = await loadPaidScenes();
       if (!ok) return false;
-      storePassphrase(passphrase);
       set({ paidReady: true });
       const s = get();
       if (s.pendingSave) {

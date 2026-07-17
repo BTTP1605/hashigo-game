@@ -4,13 +4,11 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run encrypt && vite",
-    "build": "npm run encrypt && tsc --noEmit && vite build",
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "encrypt": "node scripts/encrypt-scenario.mjs",
     "genimg": "node scripts/generate-images.mjs",
-    "gense": "node scripts/generate-se.mjs",
-    "deploy": "node scripts/require-passphrase.mjs && npm run build && gh-pages -d dist"
+    "gense": "node scripts/generate-se.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
