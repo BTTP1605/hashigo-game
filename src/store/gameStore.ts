@@ -171,11 +171,21 @@ export const useGameStore = create<GameStore>((set, get) => {
         case "jump":
           gotoScene(node.scene);
           return;
-        case "chapter":
+        case "chapter": {
           set({ nodeIndex: idx, chapterTitle: `${node.title} ${node.subtitle ?? ""}`.trim() });
           audio.playSe("se_chapter");
+          // 章カード表示中のBGMを、続く最初のbgノードに合わせる（タイトルBGMの持ち越し防止）。
+          for (let j = idx + 1; j < scene.nodes.length; j++) {
+            const nn = scene.nodes[j];
+            if (nn.type === "bg") {
+              audio.playBgm(BGM_BY_BG[nn.value] ?? null);
+              break;
+            }
+            if (nn.type === "chapter") break;
+          }
           saveGame("auto", makeSaveData());
           return;
+        }
         case "text": {
           if (node.effects) runEffects(node.effects);
           const backlog = [...get().backlog, { speaker: node.speaker ?? node.bbs?.handle, text: node.text }].slice(-200);
@@ -229,8 +239,10 @@ export const useGameStore = create<GameStore>((set, get) => {
         // note解錠リンクから戻ってきた直後（?unlocked=1）は、壁で保存したセーブから再開する。
         const justUnlocked = new URLSearchParams(location.search).has("unlocked");
         if (justUnlocked) {
+          // 壁のオートセーブは「無料章の最後のノード」なので、有料章に限定せず再開する。
+          // 再開後に1つ進めれば自然に有料章へ入る。
           const data = loadGame("auto");
-          if (data && isPaidScene(data.sceneId)) {
+          if (data) {
             const scene = getScene(data.sceneId);
             const idx = scene ? scene.nodes.findIndex((n) => n.id === data.nodeId) : -1;
             set({
@@ -266,6 +278,10 @@ export const useGameStore = create<GameStore>((set, get) => {
         endingId: null,
         overlay: null,
         toasts: [],
+        autoMode: false,
+        skipMode: false,
+        pendingScene: null,
+        pendingSave: null,
         screen: "game",
       });
       processFrom(0);
@@ -342,7 +358,8 @@ export const useGameStore = create<GameStore>((set, get) => {
 
     backToTitle: () => {
       saveGame("auto", makeSaveData());
-      set({ screen: "title", overlay: null });
+      // 壁で保留したセーブ・シーンは持ち越さない（次回解錠時の誤適用を防ぐ）。
+      set({ screen: "title", overlay: null, pendingScene: null, pendingSave: null });
     },
 
     finishEnding: () => {
@@ -371,6 +388,7 @@ export const useGameStore = create<GameStore>((set, get) => {
             backlog: [],
             screen: "game",
           });
+          audio.playBgm(BGM_BY_BG[data.bg] ?? null);
         }
         return true;
       }
