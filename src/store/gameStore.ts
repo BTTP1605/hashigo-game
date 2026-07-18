@@ -256,6 +256,8 @@ export const useGameStore = create<GameStore>((set, get) => {
               backlog: [],
               overlay: null,
               endingId: null,
+              autoMode: false,
+              skipMode: false,
               screen: "game",
             });
             audio.playBgm(BGM_BY_BG[data.bg] ?? null);
@@ -351,6 +353,9 @@ export const useGameStore = create<GameStore>((set, get) => {
         backlog: [],
         overlay: null,
         endingId: null,
+        // ロード時にAUTO/SKIPは必ず解除（前回セッションの高速送りが持ち越さないように）。
+        autoMode: false,
+        skipMode: false,
         screen: "game",
       });
       audio.playBgm(BGM_BY_BG[data.bg] ?? null);
@@ -359,7 +364,15 @@ export const useGameStore = create<GameStore>((set, get) => {
     backToTitle: () => {
       saveGame("auto", makeSaveData());
       // 壁で保留したセーブ・シーンは持ち越さない（次回解錠時の誤適用を防ぐ）。
-      set({ screen: "title", overlay: null, pendingScene: null, pendingSave: null });
+      // AUTO/SKIPもタイトルで解除する。
+      set({
+        screen: "title",
+        overlay: null,
+        pendingScene: null,
+        pendingSave: null,
+        autoMode: false,
+        skipMode: false,
+      });
     },
 
     finishEnding: () => {
@@ -386,6 +399,8 @@ export const useGameStore = create<GameStore>((set, get) => {
             bg: data.bg,
             chapterTitle: data.chapterTitle,
             backlog: [],
+            autoMode: false,
+            skipMode: false,
             screen: "game",
           });
           audio.playBgm(BGM_BY_BG[data.bg] ?? null);
