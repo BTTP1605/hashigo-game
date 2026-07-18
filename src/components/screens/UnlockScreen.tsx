@@ -2,8 +2,8 @@ import { useState } from "react";
 import { audio } from "../../engine/audio";
 import { useGameStore } from "../../store/gameStore";
 
-// note有料記事のURL（この記事の有料部分に解錠リンクを掲載する）。販売時に差し替える。
-const NOTE_ARTICLE_URL = "https://note.com/bttp";
+// note有料記事のURL（この記事の有料部分に解錠リンクを掲載する）。
+const NOTE_ARTICLE_URL = "https://note.com/bttp/n/nb2ac88393051";
 
 export default function UnlockScreen() {
   const recheckUnlock = useGameStore((s) => s.recheckUnlock);
